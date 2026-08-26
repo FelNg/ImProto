@@ -1,60 +1,51 @@
 package com.example.improto;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 @SpringBootTest
 class ImprotoApplicationTests {
-	/*private PersonRepository personRepo;
-	private PersonService personServ;
+	//test service mock initialization
+	@MockitoBean
+	PersonRepository personRepo;
 	
-	private Person createAndReturnPerson() {
-		Person person = Person.builder()
-				.firstName("bob")
-				.lastName("dylan")
-				.age(30)
-				.id(1)
-				.build();
-		return personRepo.save(person);
-	}
+	@Autowired
+	PersonService personServ;
 	
-	private Person buildPerson() {
-		Person person = Person.builder()
-				.firstName("amy")
-				.lastName("rose")
-				.age(20)
-				.id(2)
-				.build();
-		return person;
-	}
-
+	// test a basic data insertion and assure the data is saved correctly
 	@Test
-	void givenPerson_whenUpdateOrInsertUsingRepositoryExecture_thenUpserted() {
-		// initialize references to service for easier readability
-		// insert test
-		Person newPerson = buildPerson();
-		Person existingPersonById =
-				personRepo.findById(newPerson.getId()).get();
-		assertNull(existingPersonById);
+	void testData() {
+		//raw insert - let JPA autogenerate id
+		Person person1 = Person.builder()
+				.firstName("bob")
+				.lastName("nolan")
+				.age(40)
+				.id(0)
+				.build();
 		
-		personServ.updateOrInsertUsingRepository(newPerson);
+		when(personRepo.save(person1)).thenReturn(person1);
+		when(personRepo.findById(0)).thenReturn(Optional.of(person1));
 		
-		existingPersonById = personRepo.findById(newPerson.getId()).get();
-		assertNotNull(existingPersonById);
+		Person saveResult = personServ.save(person1);
+		
+		//assert that the Service has saved one Person entry
+		assertEquals("bob", personServ.findById(0).getFirstName());
+		assertEquals("nolan", personServ.findById(0).getLastName());
+		assertEquals(40, personServ.findById(0).getAge());
+		assertEquals(0, personServ.findById(0).getId());
+		
+		//make sure that personRepo.findById(0) was called only four times
+		verify(personRepo, times(4)).findById(0);
 	}
-
-	private void assertNull(Person inPerson) {
-		if (inPerson != null) {
-			throw new AssertionError("Person object is not null!");
-		}
-	}
-	
-	// not null check
-	private void assertNotNull(Person inPerson) {
-		if (inPerson == null) {
-			throw new AssertionError("Person object is null!");
-		}
-	}*/
 	
 	@Test
 	void contextLoads() {
