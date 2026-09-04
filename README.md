@@ -1,6 +1,6 @@
 # ImProto - Back End
-A prototype created to learn how to create various back-end-related systems using Java and other technologies.
-The back-end counterpart for ImProto, which can be found at:
+A prototype created to learn how to create various back-end-related systems using Java and other technologies.<br>
+The back-end counterpart for ImProto, which can be found at:<br>
 [GitHub](https://github.com/FelNg/ImProto-Front) | [Codeberg](https://codeberg.org/telios/ImProto-Front)
 
 ---
@@ -25,4 +25,4 @@ The back-end counterpart for ImProto, which can be found at:
 - Potentially change data entry updates to PATCH requests instead?
 - Persistent H2 database.
   - Potentially move to PostgreSQL later.
-- Functional front end 
+- Functional front end.
